@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.fiap.softtek.mindtek.data.database.AppDatabase
 import br.com.fiap.softtek.mindtek.data.model.MoodEntry
+import br.com.fiap.softtek.mindtek.ui.components.PrimaryButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +43,20 @@ fun CheckInScreen(navController: NavController) {
         }) {
             Text("Salvar e Ver Gráfico")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            navController.navigate("assessment_result")
+        }) {
+            Text("Ver Respostas da Avaliação")
+        }
+
+        PrimaryButton("Ver respostas") {
+            navController.navigate("respostas")
+        }
+
+
 
 
     }

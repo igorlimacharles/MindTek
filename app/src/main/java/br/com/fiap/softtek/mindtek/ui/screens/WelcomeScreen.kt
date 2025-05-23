@@ -30,10 +30,6 @@ fun WelcomeScreen(navController: NavController) {
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-                PrimaryButton("Ver Histórico") {
-                    navController.navigate("history")
-                }
             }
         }
     }

@@ -5,12 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.fiap.softtek.mindtek.data.dao.MoodDao
+import br.com.fiap.softtek.mindtek.data.dao.AssessmentDao
 import br.com.fiap.softtek.mindtek.data.model.MoodEntry
+import br.com.fiap.softtek.mindtek.data.model.AssessmentEntry
 
-@Database(entities = [MoodEntry::class], version = 1)
+@Database(entities = [MoodEntry::class, AssessmentEntry::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun moodDao(): MoodDao
+
+    abstract fun assessmentDao(): AssessmentDao
 
     companion object {
         @Volatile
@@ -22,7 +26,11 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "mindtek_db"
-                ).build()
+                )
+                    // ⚠️ Remove esta linha em produção. Ela evita crashes por mudança de schema.
+                    .fallbackToDestructiveMigration()
+                    .build()
+
                 INSTANCE = instance
                 instance
             }

@@ -28,6 +28,19 @@ fun AppNavigation(navController: NavHostController) {
 
             HistoryScreen(viewModel = viewModel)
         }
+
+        composable("assessment_result") { AssessmentResultScreen() }
+
+        composable("respostas") {
+            AssessmentListScreen()
+        }
+
+        composable("assessmentHistory") {
+            AssessmentHistoryScreen()
+        }
+
+
+
     }
 }
 
