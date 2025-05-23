@@ -28,6 +28,8 @@ fun WelcomeScreen(navController: NavController) {
                 PrimaryButton("Começar") {
                     navController.navigate("assessment")
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
