@@ -6,20 +6,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.fiap.softtek.mindtek.data.model.AssessmentEntry
+import br.com.fiap.softtek.mindtek.data.model.AssessmentViewModel
 
 @Composable
-fun AssessmentHistoryScreen() {
-    val context = LocalContext.current
-    val viewModel: AssessmentHistoryViewModel = viewModel(
-        factory = AssessmentHistoryViewModelFactory(context)
-    )
-    val history by viewModel.assessmentList.collectAsState()
+fun AssessmentHistoryScreen(viewModel: AssessmentViewModel = viewModel()) {
+    val history by viewModel.assessments.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.loadAssessmentHistory()
+        viewModel.loadAssessments()
     }
 
     Column(modifier = Modifier
@@ -30,7 +27,7 @@ fun AssessmentHistoryScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
-            items(history) { entry ->
+            items(history) { entry: AssessmentEntry ->
                 Column(modifier = Modifier.padding(vertical = 8.dp)) {
                     Text("Data: ${entry.data}", style = MaterialTheme.typography.labelMedium)
                     Text("Pergunta: ${entry.pergunta}")

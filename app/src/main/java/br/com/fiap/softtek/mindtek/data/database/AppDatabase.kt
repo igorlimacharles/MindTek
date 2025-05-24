@@ -9,7 +9,7 @@ import br.com.fiap.softtek.mindtek.data.dao.AssessmentDao
 import br.com.fiap.softtek.mindtek.data.model.MoodEntry
 import br.com.fiap.softtek.mindtek.data.model.AssessmentEntry
 
-@Database(entities = [MoodEntry::class, AssessmentEntry::class], version = 2)
+@Database(entities = [MoodEntry::class, AssessmentEntry::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun moodDao(): MoodDao

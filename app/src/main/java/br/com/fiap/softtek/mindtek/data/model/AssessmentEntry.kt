@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class AssessmentEntry(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val data: String,
+    val hora: String, // ✅ Novo campo adicionado
     val perguntaId: Int,
     val pergunta: String,
     val resposta: Boolean
 )
-

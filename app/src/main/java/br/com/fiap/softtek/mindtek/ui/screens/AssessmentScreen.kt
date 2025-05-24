@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+import androidx.compose.ui.graphics.Color
+
 @Composable
 fun AssessmentScreen(navController: NavController) {
     val questions = MockAssessment.questions
@@ -37,25 +39,46 @@ fun AssessmentScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         questions.forEach { question ->
-            Row(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(vertical = 8.dp)
             ) {
-                Text(question.text, modifier = Modifier.weight(1f))
-                Switch(
-                    checked = answers[question.id] ?: false,
-                    onCheckedChange = { answers[question.id] = it }
-                )
+                Text(question.text, style = MaterialTheme.typography.bodyLarge)
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(
+                        onClick = { answers[question.id] = true },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (answers[question.id] == true)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                Color.Gray.copy(alpha = 0.6f)
+                        )
+                    ) {
+                        Text("Sim")
+                    }
+                    Button(
+                        onClick = { answers[question.id] = false },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (answers[question.id] == false)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                Color.Gray.copy(alpha = 0.6f)
+                        )
+                    ) {
+                        Text("Não")
+                    }
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        PrimaryButton("Próximo") {
+        PrimaryButton("Salvar") {
             coroutineScope.launch(Dispatchers.IO) {
                 val dataHoje = SimpleDateFormat("dd/MM", Locale.getDefault()).format(Date())
+                val horaAgora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()) // ⬅️ hora adicionada aqui
 
                 MockAssessment.questions.forEach { pergunta ->
                     val resposta = answers[pergunta.id]
@@ -63,6 +86,7 @@ fun AssessmentScreen(navController: NavController) {
                         dao.inserirResposta(
                             AssessmentEntry(
                                 data = dataHoje,
+                                hora = horaAgora, // ⬅️ nova linha adicionada
                                 perguntaId = pergunta.id,
                                 pergunta = pergunta.text,
                                 resposta = resposta
@@ -72,78 +96,13 @@ fun AssessmentScreen(navController: NavController) {
                 }
 
                 withContext(Dispatchers.Main) {
-                    navController.navigate("checkin")
+                    navController.navigate("assessment")
                 }
             }
         }
 
-//        PrimaryButton("Ver Histórico") {
-//            navController.navigate("assessmentHistory")
-//        }
-
+        PrimaryButton("Ver respostas") {
+            navController.navigate("respostas")
+        }
     }
 }
-
-
-
-//@Composable
-//fun AssessmentScreen(navController: NavController) {
-//    val questions = MockAssessment.questions
-//    val answers = remember { mutableStateMapOf<Int, Boolean>() }
-//
-//    Column(modifier = Modifier.padding(16.dp)) {
-//        Text("Avaliação Psicossocial", style = MaterialTheme.typography.headlineSmall)
-//
-//        Spacer(modifier = Modifier.height(8.dp))
-//
-//        questions.forEach { question ->
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(vertical = 4.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween
-//            ) {
-//                Text(question.text, modifier = Modifier.weight(1f))
-//                Switch(
-//                    checked = answers[question.id] ?: false,
-//                    onCheckedChange = { answers[question.id] = it }
-//                )
-//            }
-//        }
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-////        PrimaryButton("Próximo") {
-////            navController.navigate("checkin")
-////        }
-//
-//        val context = LocalContext.current
-//        val dao = AppDatabase.getDatabase(context).assessmentDao()
-//
-//        PrimaryButton("Próximo") {
-//            CoroutineScope(Dispatchers.IO).launch {
-//                val dataHoje = SimpleDateFormat("dd/MM", Locale.getDefault()).format(Date())
-//
-//                MockAssessment.questions.forEach { pergunta ->
-//                    val resposta = answers[pergunta.id]
-//                    if (resposta != null) {
-//                        dao.inserirResposta(
-//                            AssessmentEntry(
-//                                data = dataHoje,
-//                                perguntaId = pergunta.id,
-//                                pergunta = pergunta.text,
-//                                resposta = resposta
-//                            )
-//                        )
-//                    }
-//                }
-//
-//                withContext(Dispatchers.Main) {
-//                    navController.navigate("checkin")
-//                }
-//            }
-//        }
-//
-//
-//    }
-//}

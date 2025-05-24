@@ -14,7 +14,7 @@ fun BottomNavBar(navController: NavHostController) {
         BottomNavItem("Início", "welcome", Icons.Default.Home),
         BottomNavItem("Avaliação", "assessment", Icons.Default.List),
         BottomNavItem("Check-in", "checkin", Icons.Default.EmojiEmotions),
-        BottomNavItem("Histórico", "graph", Icons.Default.PieChart),
+        BottomNavItem("Histórico", "history", Icons.Default.PieChart),
         BottomNavItem("Recursos", "resources", Icons.Default.Lightbulb)
     )
 

@@ -5,10 +5,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import br.com.fiap.softtek.mindtek.data.mock.HistoryScreen
+import br.com.fiap.softtek.mindtek.data.mock.*
+import br.com.fiap.softtek.mindtek.data.model.*
 import br.com.fiap.softtek.mindtek.ui.screens.*
 import androidx.lifecycle.viewmodel.compose.viewModel
-
 
 
 @Composable
@@ -29,7 +29,7 @@ fun AppNavigation(navController: NavHostController) {
             HistoryScreen(viewModel = viewModel)
         }
 
-        composable("assessment_result") { AssessmentResultScreen() }
+        //composable("assessment_result") { AssessmentResultScreen() }
 
         composable("respostas") {
             AssessmentListScreen()
@@ -39,7 +39,9 @@ fun AppNavigation(navController: NavHostController) {
             AssessmentHistoryScreen()
         }
 
-
+        composable("history") {
+            MoodHistoryScreen(navController = navController)
+        }
 
     }
 }

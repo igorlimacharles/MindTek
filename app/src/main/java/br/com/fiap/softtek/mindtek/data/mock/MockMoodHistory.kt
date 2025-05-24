@@ -11,7 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.com.fiap.softtek.mindtek.ui.screens.MoodHistoryViewModel
+import br.com.fiap.softtek.mindtek.data.model.MoodHistoryViewModel
 
 @Composable
 fun HistoryScreen(viewModel: MoodHistoryViewModel) {
